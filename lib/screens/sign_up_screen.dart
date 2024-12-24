@@ -50,7 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
     print("2");
     _formKey.currentState!.save();
-    context.read<AuthCubit>().signUp(email: _email, userName: _username, password: _password);
+    context.read<AuthCubit>().signUp(email: _email, username: _username, password: _password);
   }
 
   @override
