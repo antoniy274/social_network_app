@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_network_app/block/auth_cubit.dart';
-import 'package:social_network_app/screens/chat_screen.dart';
+// import 'package:social_network_app/screens/chat_screen.dart';
 import 'package:social_network_app/screens/create_post_screen.dart';
 import 'package:social_network_app/screens/post_screen.dart';
 import 'package:social_network_app/screens/sign_in_screen.dart';
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
           SignInScreen.id: (context) => SignInScreen(),
           SignUpScreen.id: (context) => SignUpScreen(),
           PostsScreen.id: (context) => PostsScreen(),
-          // CreatePostScreen.id: (context) => CreatePostScreen(),
+          CreatePostScreen.id: (context) => CreatePostScreen(),
           // ChatScreen.id: (context) => ChatScreen(),
         },
       ),

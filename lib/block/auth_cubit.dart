@@ -32,7 +32,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> signUp({
     required String email,
-    required String userName,
+    required String username,
     required String password,
   }) async {
     emit(AuthLoading());
@@ -48,10 +48,10 @@ class AuthCubit extends Cubit<AuthState> {
           .doc(userCredential.user!.uid)
           .set({
         "userID": userCredential.user!.uid,
-        "userName": userName,
+        "userName": username,
         "email": email
       });
-      userCredential.user!.updateDisplayName(userName);
+      userCredential.user!.updateDisplayName(username);
       emit(AuthSignedUp());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
