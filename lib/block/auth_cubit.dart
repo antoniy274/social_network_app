@@ -14,9 +14,11 @@ class AuthCubit extends Cubit<AuthState> {
   }) async {
     emit(AuthLoading());
     FirebaseAuth auth = FirebaseAuth.instance;
+    print(1);
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       emit(AuthSignedIn());
+      print(2);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         emit(AuthFailure(messege: 'No user found for that email.'));
