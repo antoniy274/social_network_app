@@ -43,7 +43,10 @@ class _PostsScreenState extends State<PostsScreen> {
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection("posts").snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection("posts")
+            .orderBy("timestamp")
+            .snapshots(),
         builder: (context, snapshot){
           if(snapshot.hasError){
             return Center(child: Text("Error"),);
