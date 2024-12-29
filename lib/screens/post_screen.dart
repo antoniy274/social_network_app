@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'package:social_network_app/models/post_model.dart';
+import 'package:social_network_app/screens/chat_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,7 +43,10 @@ class _PostsScreenState extends State<PostsScreen> {
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection("posts").snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection("posts")
+            .orderBy("timestamp")
+            .snapshots(),
         builder: (context, snapshot){
           if(snapshot.hasError){
             return Center(child: Text("Error"),);
@@ -56,26 +60,41 @@ class _PostsScreenState extends State<PostsScreen> {
           return ListView.builder(
               itemCount: snapshot.data?.docs.length ?? 0,
               itemBuilder: (context, index){
+
                 final QueryDocumentSnapshot doc = snapshot.data!.docs[index];
-                return Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                              image: NetworkImage(doc["imageURL"],),
-                            fit: BoxFit.cover
+
+                final Post post = Post(
+                    id: doc["postID"],
+                    userID: doc["userID"],
+                    userName: doc["userName"],
+                    timestamp:doc["timestamp"],
+                    imageURL: doc["imageURL"],
+                    description: doc["description"]);
+
+                return GestureDetector(
+                  onTap: (){
+                    Navigator.of(context).pushNamed(ChatScreen.id, arguments: post);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            image: DecorationImage(
+                                image: NetworkImage(post.imageURL,),
+                              fit: BoxFit.cover
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(height: 5,),
-                      Text(doc["userName"], style: Theme.of(context).textTheme.headlineLarge,),
-                      SizedBox(height: 5,),
-                      Text(doc["description"], style: Theme.of(context).textTheme.headlineMedium,),
-                    ],
+                        SizedBox(height: 5,),
+                        Text(post.userName, style: Theme.of(context).textTheme.headlineLarge,),
+                        SizedBox(height: 5,),
+                        Text(post.description, style: Theme.of(context).textTheme.headlineMedium,),
+                      ],
+                    ),
                   ),
                 );
               });

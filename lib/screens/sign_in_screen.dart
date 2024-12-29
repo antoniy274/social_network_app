@@ -87,7 +87,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.black),
                             ),
-                            labelText: "Enter you emaail",
+                            labelText: "Enter you email",
                           ),
                           textInputAction: TextInputAction.next,
                           onFieldSubmitted: (_){
